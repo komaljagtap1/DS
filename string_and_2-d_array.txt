@@ -1,0 +1,529 @@
+String and 2-d array assignments:
+
+Write a program that would take two strings as input and determine if they are anagram of each other. 
+
+Two words are called as anagram when second word is made after rearranging characters of first word.
+
+So for example, “god” and “dog” or “act” and “cat” are 	anagrams
+
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+	char ch,str1[6],str2[6];
+	int i,j,flag=0;
+	printf("\n First String:");
+	gets(str1);
+	printf("\n Second String: ");
+	gets(str2);
+	if(strlen(str1)!=strlen(str2))
+        {
+	   printf("\n Not anagram ");
+           return 0; 
+	} 
+       for(i=0;str1[i]!='\0';i++)
+	{
+	    for(j=0;str2[j]!='\0';j++)
+		{
+		    if(str1[i]==str2[j])
+			{
+				flag=1;
+		       ch=str2[i];
+		       str2[i]=str2[j];
+		       str2[j]=ch;
+		       	if(strcmp(str1,str2)==0) {
+	  				printf("\n anagram ");
+	  				return 1;
+	  			}
+		    }   	
+		}
+		if(flag==0)
+		{
+			printf("\n  not anagram");
+			return 0;
+		}
+	}
+	
+}
+
+
+
+Replace all the multiple occurrence of a character by a single, same character.
+	
+	Example:
+	Input: invigilation
+	Output: invglato
+
+  create target array - simple (all should it)
+  change same array by removing all occurences of char.
+
+int main()
+{
+        int i,j,k,cnt;
+	char ch;
+	printf("\n");
+	for(i=0;str[i]!='\0';i++)
+	{
+	  	ch=lower(str[i]);
+	  	for(j=i+1;str[j]!='\0';j++)
+	  	{
+	  		if(ch==lower(str[j]))
+	  		{ 
+	  			for(k=j;str[k+1]!='\0';k++)
+	  			{
+	  				str[k]=str[k+1];
+	  			}
+	  			str[k]='\0';
+	  		}
+	  	}
+                printf("%c  ",ch);
+	}
+}
+
+
+
+
+
+Count the frequency of all characters in a string and print the characters and count for each character, include space and digits also while counting
+
+#include<stdio.h>
+#include<string.h>
+void count(char *str);
+int main(void)
+{
+	char str[50];
+	printf("Enter a string : ");
+	gets(str);
+	count(str);
+	return 0;
+}
+void count(char *str1)
+{
+	char str[50],ch;
+	int i,j,count,n;
+	strcpy(str,str1);
+	n=strlen(str);
+
+	for(i=0; i<n; i++)
+	{
+		if(str[i]!=0)
+		{
+			ch=str[i];	
+			count=0;
+			for(j=0; j<n; j++)
+				if(str[j]==ch)
+				{
+					count++;
+					str[j]=0;
+				}
+			printf("%c occurs %d times\n",ch,count);
+        }
+	}
+}
+
+
+Write a program to print most frequent character / characters in a string.
+
+- The program should print the character or characters that occurs the most number of times in the given text.
+- If there are multiple characters with the same frequency, the program should print all those, seperated by a comma, in order in which they first appear in the given string.
+- If the input text is less than 2 characters long, print invalid input.
+
+Consider only letters and digits for counting(ignore spaces and special characters). Also consider uppercase and lowercase letters as different.
+
+
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+	char str[100]="AAAA00009999aaaazzzzZZZZ     ";
+	printmostfrequentchar(str);
+	return 0;
+}
+
+
+void printmostfrequentchar(char *s)
+{
+    int i,j,k,arr[123],index,max;
+	char ch;
+	char str[100];
+    strcpy(str,s);
+	printf("\nstr = %s",str);
+	k=strlen(str);
+	for(i=0;i<123;i++)
+	{
+		arr[i]=0;
+	} 
+	for(i=0;i<k;i++)
+	{
+		printf("\n str[%d]=%s",i,str);
+		if(((str[i]>='0')&&(str[i]<='9'))||((str[i]>='A')&&(str[i]<='Z'))||((str[i]>='a')&&(str[i]<='z')))
+		{
+	  	ch=str[i];
+	  	arr[ch]=arr[ch]+1;
+	  	
+		for(j=i+1;j<k;j++)
+	  	{
+	  		if(ch==str[j])
+	  		{
+	  		    arr[ch]=arr[ch]+1;
+				str[j]='*';
+	  		}
+	  	}
+	   }
+	   printf("\n %s",str);
+	}
+	
+	max=arr[0];
+	for(i=1;i<=122;i++)
+	{
+		if(arr[i]>max)
+		  max=arr[i];
+	}
+	printf("\n Max = %d\n",max);
+   for(i=0;i<k;i++)
+   {
+   	  if(arr[str[i]]==max)
+		 printf("\n %c",str[i]);
+      
+   }
+}
+
+
+
+
+
+
+
+
+
+
+
+Write a program to reverse letters in the words of a string. For example:
+Input: Prudent Software and Grooming Academy
+Output: tnedurP wrawtfoS dna gnimoorG ymedacA
+
+#include<stdio.h>
+#include<string.h>
+void reverse(char str[], int start, int end);
+void reverse_letters(char str[], int start, int end);
+int main(void)
+{
+	char str[50];
+	strcpy(str,"Prudent Software and Grooming Academy");
+	reverse_letters(str,0,strlen(str)-1);
+	puts(str);
+	return 0;
+}
+void reverse_letters(char str[], int start, int end)
+{
+	int w_start,w_end;
+	
+	for(w_start=w_end=start; w_end<end; w_end++)
+	{
+		if(str[w_end]==' ')
+			continue;
+		w_start = w_end;
+		while(str[w_end]!=' ' && w_end<=end)
+			w_end++;
+		w_end--;
+		reverse(str,w_start,w_end);/*Reverse the word*/
+ 	}
+}
+void reverse(char str[], int start, int end)
+{
+	char tmp;
+	while(start<=end)
+	{
+		tmp=str[start];
+		str[start]=str[end];
+		str[end]=tmp;
+		start++;
+		end--;
+	}
+}
+
+
+
+
+
+
+
+Write a program to reverse the words in a string.
+Input: Prudent Software and Grooming Academy
+Output: Academy Grooming and Software Prudent
+
+#include<stdio.h>
+#include<string.h>
+void reverse_words(char str[],int start,int end);
+void reverse_letters(char str[],int start,int end);
+void reverse(char str[],int start,int end);
+int main(void)
+{
+	char str[50];
+	strcpy(str,"I have many books");
+	reverse_words(str,0,strlen(str)-1);
+	puts(str);
+	return 0;
+}
+void reverse_words(char str[], int start, int end)
+{
+	reverse(str, start, end);
+	reverse_letters(str, start, end);
+}
+void reverse_letters(char str[], int start, int end)
+{
+	int w_start,w_end;
+	
+	for(w_start=w_end=start; w_end<end; w_end++)
+	{
+		if(str[w_end]==' ')
+			continue;
+		w_start = w_end;
+		while(str[w_end]!=' ' && w_end<=end)
+			w_end++;
+		w_end--;
+		reverse(str,w_start,w_end);/*Reverse the letters of the word*/
+ 	}
+}
+void reverse(char str[], int start, int end)
+{
+	char tmp;
+	while(start<=end)
+	{
+		tmp=str[start];
+		str[start]=str[end];
+		str[end]=tmp;
+		start++;
+		end--;
+	}
+}
+
+
+
+2-d array:
+
+
+//Print sum of outer elements of 4x4 matrix
+
+#include<stdio.h>
+int main()
+{
+	int arr[4][4]={{1,2,3,4},{5,6,7,8},{1,2,3,4},{5,6,7,8}};
+	int i,j;
+	for(i=0;i<4;i++)
+	{
+		for(j=0;j<4;j++)
+		{
+			if((i==0)||(j==0)||(i==3)||(j==3))
+			  sum=sum+arr[i][j]);
+		}
+	}
+	printf("\n Sum = %d",sum);
+}
+
+
+Pascal Traingle
+1
+1 1
+1 2 1
+1 3 3 1
+1 4 6 4 1
+1 5 10 10 5 1
+1 6 15 20 15 6 1
+
+1. All the elements of column 0 are 1
+2. All the elements of which row and column are same, are 1
+3. Any other element can be obtained by adding two elements of previous row as -
+   a[row][col]=a[row-1][col-1]+a[row-1][col]
+ */  
+#include<stdio.h>
+#define MAX 15
+int main(void)
+{
+	int a[MAX][MAX];
+	int i,j,n;
+	printf("Enter n : ");
+	scanf("%d",&n);
+	for(i=0; i<=n; i++)
+	{
+		for(j=0; j<=i; j++)
+			if(j==0 || i==j)
+				a[i][j]=1;
+			else 
+				a[i][j]=a[i-1][j-1]+a[i-1][j];
+	}
+	for(i=0; i<n; i++)
+	{
+		for(j=0; j<=i; j++)
+			printf("%5d",a[i][j]);
+		printf("\n");
+	}
+	return 0;
+}
+
+
+
+WAP to print sum of diagonal elements in a matrix.
+
+#include<stdio.h>
+int main()
+{
+	int arr[3][3]={{1,2,3},{4,5,6},{7,8,9}};
+	int i,j,sum=0;
+	for(i=0;i<3;i++)
+	{
+		for(j=0;j<3;j++)
+	    {
+	    	if(i==j)
+	    	{
+	    		sum=sum+arr[i][j];
+			}
+		}
+	}
+	printf("\n Sum = %d",sum);
+}
+
+
+
+WAP to print a square matrix spirally.
+
+#include<stdio.h>
+#define MAX 20
+int main(void)
+{
+	int a[MAX][MAX],i,j,n,start,end;
+	printf("Enter value of n : ");
+	scanf("%d", &n);
+	
+	for(i=0; i<n; i++)
+	{
+		for(j=0; j<n; j++)
+			scanf("%d", &a[i][j]);
+		printf("\n");
+	}
+	for(i=0; i<n; i++)
+	{
+		for(j=0; j<n; j++)
+			printf("%4d", a[i][j]);
+		printf("\n");
+	}
+	printf("\n\n");
+
+	for(start=0,end=n-1; start<=end; start++,end--)
+	{
+		for(i=start; i<=end; i++)
+			printf("%d ",a[start][i]);
+		for(i=start+1; i<=end; i++)
+			printf("%d ",a[i][end]);
+		for(i=end-1; i>=start; i--)
+			printf("%d ",a[end][i]);
+		for(i=end-1; i>=start+1; i--)
+			printf("%d ",a[i][start]);
+	}
+	return 0;
+}
+
+
+
+
+
+
+Write a program to find 3*3 matrix having greatest sum of border elements in a 6 * 8 matrix  
+
+program is written in Java - 
+
+
+package study.pog.TwoDArray;
+import java.util.Scanner;
+public class GreatestSumof3x3in6x8 {
+  public static void main(String[] args) {
+	int a[][],i,j,n,m;
+	int starti=0,startj=0,sum=0,maxsum=0,maxi=0,maxj=0;
+	System.out.println("Enter value of n : ");
+	Scanner sc=new Scanner(System.in);
+	System.out.println("Enter no. of rows:");
+	n=sc.nextInt();
+	System.out.println("Enter no. of cols:");
+	m=sc.nextInt();
+        a=new int[n][m];
+        //nested loop to read array element values 
+	for(i=0; i<n; i++)
+	{
+        	for(j=0; j<m; j++)
+		{
+			a[i][j]=sc.nextInt();
+		}
+	}
+         //loop for printing matrix 
+	for(i=0; i<n; i++)
+	{
+		for(j=0; j<m; j++)
+		  System.out.print(" "+a[i][j]);
+			System.out.print("\n");
+	}
+		
+        System.out.print("\n\n"); 
+        /* nested loop for finding sum and compare it with maxsum and overwrite maxi and maxj */
+        while(starti<=(n-3))
+        { 
+          startj=0;
+          while(startj<=(m-3))
+          {
+             sum=0;
+             for(i=starti;i<starti+3;i++)
+	     {
+		for(j=startj;j<startj+3;j++)
+		{
+		 if((i==starti)||(j==startj)||(i==starti+2)||(j==startj+2))
+		   sum=sum+a[i][j];
+		}
+	      }
+              System.out.println("sum =  "+sum);
+              if(sum>maxsum)
+              {
+        	maxsum=sum;
+        	maxi=starti;
+        	maxj=startj;
+              }
+              startj=startj+1;
+    	   }
+          starti=starti+1;
+        }
+        for (i = maxi; i < maxi+3; i++) 
+        {
+	  for(j=maxj;j<maxj+3;j++)
+	  {
+	    System.out.print("  "+a[i][j]);
+	  } 
+	  System.out.print("\n");
+        }
+  }//end of main()
+}//end of class
+
+
+
+
+Write a program to print names of employees in sorted order of first name, middle name and last name. if you have 3 names in an array, each name should get printed three times in output. 						
+Example: Input
+ziva mahendra dhoni
+vedant gautam surve
+anil kamal patki
+
+Output:
+anil kamal patki
+ziva mahendra dhoni
+vedant gautam surve
+anil kamal patki
+ziva mahendra dhoni
+anil kamal patki
+vedant gautam surve
+vedant gautam surve
+ziva mahendra dhoni
+
+
+
+
+
+
+
+
